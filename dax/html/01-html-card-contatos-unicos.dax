@@ -1,0 +1,759 @@
+// Expressão extraída do modelo; marca e referências específicas generalizadas.
+HTML Card - Contatos Únicos =
+VAR Titulo = "Contatos únicos"
+VAR Icone = "𖡌"
+
+-- ============================================================
+-- VALOR ATUAL
+-- ============================================================
+
+VAR ValorAtual =
+    [Quantidade de Contatos]
+
+
+-- ============================================================
+-- IDENTIFICAÇÃO DO FILTRO
+-- ============================================================
+
+VAR TemFiltroData =
+    ISFILTERED(dCalendario[Date])
+
+VAR TemFiltroMes =
+    ISFILTERED(dCalendario[Mês Abreviado])
+
+VAR TemFiltroTrimestre =
+    ISFILTERED(dCalendario[Trimestre])
+
+VAR TemFiltroAno =
+    ISFILTERED(dCalendario[Ano])
+
+VAR TipoPeriodo =
+    SWITCH(
+        TRUE(),
+        TemFiltroData, "PERSONALIZADO",
+        TemFiltroMes, "MES",
+        TemFiltroTrimestre, "TRIMESTRE",
+        TemFiltroAno, "ANO",
+        "GERAL"
+    )
+
+
+-- ============================================================
+-- DATAS DO CONTEXTO ATUAL
+-- ============================================================
+
+VAR DataInicioAtual =
+    MINX(
+        ALLSELECTED(dCalendario[Date]),
+        dCalendario[Date]
+    )
+
+VAR DataFimAtual =
+    MAXX(
+        ALLSELECTED(dCalendario[Date]),
+        dCalendario[Date]
+    )
+
+VAR DiasPeriodo =
+    DATEDIFF(
+        DataInicioAtual,
+        DataFimAtual,
+        DAY
+    ) + 1
+
+
+-- ============================================================
+-- MÊS ANTERIOR
+-- ============================================================
+
+VAR ValorAnteriorMes =
+    CALCULATE(
+        [Quantidade de Contatos],
+        PREVIOUSMONTH(dCalendario[Date])
+    )
+
+
+-- ============================================================
+-- TRIMESTRE ANTERIOR
+-- ============================================================
+
+VAR ValorAnteriorTrimestre =
+    CALCULATE(
+        [Quantidade de Contatos],
+        PREVIOUSQUARTER(dCalendario[Date])
+    )
+
+
+-- ============================================================
+-- ANO ANTERIOR
+-- ============================================================
+
+VAR ValorAnteriorAno =
+    CALCULATE(
+        [Quantidade de Contatos],
+        PREVIOUSYEAR(dCalendario[Date])
+    )
+
+
+-- ============================================================
+-- PERÍODO PERSONALIZADO ANTERIOR
+-- ============================================================
+
+VAR DataInicioAnteriorPersonalizado =
+    DataInicioAtual - DiasPeriodo
+
+VAR DataFimAnteriorPersonalizado =
+    DataInicioAtual - 1
+
+VAR ValorAnteriorPersonalizado =
+    CALCULATE(
+        [Quantidade de Contatos],
+        REMOVEFILTERS(dCalendario),
+        DATESBETWEEN(
+            dCalendario[Date],
+            DataInicioAnteriorPersonalizado,
+            DataFimAnteriorPersonalizado
+        )
+    )
+
+
+-- ============================================================
+-- VALOR ANTERIOR FINAL
+-- ============================================================
+
+VAR ValorAnterior =
+    SWITCH(
+        TipoPeriodo,
+        "MES", ValorAnteriorMes,
+        "TRIMESTRE", ValorAnteriorTrimestre,
+        "ANO", ValorAnteriorAno,
+        "PERSONALIZADO", ValorAnteriorPersonalizado,
+        BLANK()
+    )
+
+
+-- ============================================================
+-- COMPARATIVO
+-- ============================================================
+
+VAR Diferenca =
+    ValorAtual - ValorAnterior
+
+VAR Percentual =
+    DIVIDE(
+        Diferenca,
+        ValorAnterior,
+        0
+    )
+
+VAR EhPositivo =
+    Diferenca >= 0
+
+VAR CorPrincipal =
+    IF(
+        EhPositivo,
+        "#16C75B",
+        "#DC2626"
+    )
+
+VAR CorFundoIndicador =
+    IF(
+        EhPositivo,
+        "#DDFBEA",
+        "#FEE2E2"
+    )
+
+VAR Seta =
+    SWITCH(
+        TRUE(),
+        Diferenca > 0, "↑",
+        Diferenca < 0, "↓",
+        "–"
+    )
+
+VAR TextoDiferenca =
+    IF(
+        Diferenca >= 0,
+        "+" & FORMAT(Diferenca, "#,0"),
+        FORMAT(Diferenca, "#,0")
+    )
+
+
+-- ============================================================
+-- TEXTO DO COMPARATIVO
+-- ============================================================
+
+VAR DataReferencia =
+    MAX(dCalendario[Date])
+
+VAR DataTrimestreAnterior =
+    EDATE(
+        DataReferencia,
+        -3
+    )
+
+VAR NumeroTrimestreAnterior =
+    ROUNDUP(
+        MONTH(DataTrimestreAnterior) / 3,
+        0
+    )
+
+VAR TextoTrimestreAnterior =
+    FORMAT(
+        ROUNDUP(
+            MONTH(DataTrimestreAnterior) / 3,
+            0
+        ),
+        "0"
+    )
+    & "º tri. "
+    & FORMAT(
+        DataTrimestreAnterior,
+        "yyyy"
+    )
+VAR TextoMesAnterior =
+    FORMAT(
+        EDATE(DataReferencia, -1),
+        "[$-pt-BR]mmmm yyyy"
+    )
+
+VAR TextoAnoAnterior =
+    FORMAT(
+        YEAR(DataReferencia) - 1,
+        "0000"
+    )
+
+VAR TextoPeriodoAnterior =
+    SWITCH(
+        TipoPeriodo,
+
+        "MES",
+            TextoMesAnterior,
+
+        "TRIMESTRE",
+            TextoTrimestreAnterior,
+
+        "ANO",
+            TextoAnoAnterior,
+
+        "PERSONALIZADO",
+            FORMAT(
+                DataInicioAnteriorPersonalizado,
+                "dd/MM/yy"
+            )
+            & " a "
+            & FORMAT(
+                DataFimAnteriorPersonalizado,
+                "dd/MM/yy"
+            ),
+
+        ""
+    )
+
+-- ============================================================
+-- ============================================================
+-- BASE DINÂMICA DO GRÁFICO
+-- ============================================================
+
+VAR GranularidadeGrafico =
+    SWITCH(
+        TRUE(),
+
+        TipoPeriodo = "ANO",
+            "MES",
+
+        TipoPeriodo = "TRIMESTRE",
+            "MES",
+
+        TipoPeriodo = "MES",
+            "DIA",
+
+        TipoPeriodo = "PERSONALIZADO"
+            && DiasPeriodo <= 30,
+            "DIA",
+
+        TipoPeriodo = "PERSONALIZADO"
+            && DiasPeriodo > 30,
+            "MES",
+
+        "MES"
+    )
+
+
+-- ============================================================
+-- SÉRIE DIÁRIA
+-- ============================================================
+
+VAR SerieDia =
+    FILTER(
+        ADDCOLUMNS(
+            VALUES(dCalendario[Date]),
+
+            "_DataRef",
+                dCalendario[Date],
+
+            "_Valor",
+                CALCULATE(
+                    [Quantidade de Contatos]
+                )
+        ),
+
+        NOT ISBLANK([_Valor])
+    )
+
+
+-- ============================================================
+-- SÉRIE SEMANAL
+-- Cada ponto representa uma semana
+-- ============================================================
+
+VAR DatasSemana =
+    ADDCOLUMNS(
+        VALUES(dCalendario[Date]),
+
+        "_InicioSemana",
+            dCalendario[Date]
+                - WEEKDAY(
+                    dCalendario[Date],
+                    2
+                )
+                + 1
+    )
+
+
+VAR Semanas =
+    DISTINCT(
+        SELECTCOLUMNS(
+            DatasSemana,
+
+            "_DataRef",
+                [_InicioSemana]
+        )
+    )
+
+
+VAR SerieSemana =
+    FILTER(
+        ADDCOLUMNS(
+            Semanas,
+
+            "_Valor",
+                VAR InicioSemana =
+                    [_DataRef]
+
+                VAR FimSemana =
+                    InicioSemana + 6
+
+                RETURN
+                    CALCULATE(
+                        [Quantidade de Contatos],
+
+                        DATESBETWEEN(
+                            dCalendario[Date],
+                            InicioSemana,
+                            FimSemana
+                        )
+                    )
+        ),
+
+        NOT ISBLANK([_Valor])
+    )
+
+
+-- ============================================================
+-- SÉRIE MENSAL
+-- Cada ponto representa um mês
+-- ============================================================
+
+VAR Meses =
+    DISTINCT(
+        SELECTCOLUMNS(
+            VALUES(dCalendario[Date]),
+
+            "_DataRef",
+                DATE(
+                    YEAR(dCalendario[Date]),
+                    MONTH(dCalendario[Date]),
+                    1
+                )
+        )
+    )
+
+
+VAR SerieMes =
+    FILTER(
+        ADDCOLUMNS(
+            Meses,
+
+            "_Valor",
+                VAR InicioMes =
+                    [_DataRef]
+
+                VAR FimMes =
+                    EOMONTH(
+                        InicioMes,
+                        0
+                    )
+
+                RETURN
+                    CALCULATE(
+                        [Quantidade de Contatos],
+
+                        DATESBETWEEN(
+                            dCalendario[Date],
+                            InicioMes,
+                            FimMes
+                        )
+                    )
+        ),
+
+        NOT ISBLANK([_Valor])
+    )
+
+
+-- ============================================================
+-- NORMALIZA AS SÉRIES
+-- ============================================================
+
+VAR SerieDiaNormalizada =
+    SELECTCOLUMNS(
+        SerieDia,
+        "_DataRef", [_DataRef],
+        "_Valor", [_Valor],
+        "_Tipo", "DIA"
+    )
+
+VAR SerieSemanaNormalizada =
+    SELECTCOLUMNS(
+        SerieSemana,
+        "_DataRef", [_DataRef],
+        "_Valor", [_Valor],
+        "_Tipo", "SEMANA"
+    )
+
+VAR SerieMesNormalizada =
+    SELECTCOLUMNS(
+        SerieMes,
+        "_DataRef", [_DataRef],
+        "_Valor", [_Valor],
+        "_Tipo", "MES"
+    )
+
+
+-- ============================================================
+-- UNE AS SÉRIES E ESCOLHE A GRANULARIDADE
+-- ============================================================
+
+VAR TodasSeries =
+    UNION(
+        SerieDiaNormalizada,
+        SerieSemanaNormalizada,
+        SerieMesNormalizada
+    )
+
+VAR SerieGrafico =
+    FILTER(
+        TodasSeries,
+        [_Tipo] = GranularidadeGrafico
+    )
+
+VAR QtdePontos =
+    COUNTROWS(
+        SerieGrafico
+    )
+
+
+-- ============================================================
+-- LIMITES X
+-- ============================================================
+
+VAR DataMin =
+    MINX(
+        SerieGrafico,
+        [_DataRef]
+    )
+
+
+VAR DataMax =
+    MAXX(
+        SerieGrafico,
+        [_DataRef]
+    )
+
+
+-- ============================================================
+-- LIMITES Y
+-- ============================================================
+
+VAR ValorMin =
+    MINX(
+        SerieGrafico,
+        [_Valor]
+    )
+
+
+VAR ValorMax =
+    MAXX(
+        SerieGrafico,
+        [_Valor]
+    )
+
+
+-- Mantemos 0,95 como referência visual
+VAR ValorP05 =
+    PERCENTILEX.INC(
+        SerieGrafico,
+        [_Valor],
+        0.05
+    )
+
+
+VAR ValorP99 =
+    PERCENTILEX.INC(
+        SerieGrafico,
+        [_Valor],
+        0.95
+    )
+
+
+VAR ValorMinAjustado =
+    MAX(
+        0,
+        ValorP05 * 0.90
+    )
+
+
+VAR ValorMaxAjustado =
+    MAX(
+        ValorMinAjustado + 1,
+        ValorP99 * 1.10
+    )
+
+
+-- ============================================================
+-- DIMENSÕES
+-- ============================================================
+
+VAR W =
+    260
+
+VAR H =
+    110
+
+
+VAR FaixaData =
+    MAX(
+        1,
+        INT(DataMax) - INT(DataMin)
+    )
+
+
+VAR FaixaValor =
+    MAX(
+        1,
+        ValorMaxAjustado - ValorMinAjustado
+    )
+
+
+-- ============================================================
+-- COORDENADAS X / Y
+-- ============================================================
+
+VAR SerieComXY =
+    ADDCOLUMNS(
+        SerieGrafico,
+
+        "_X",
+            DIVIDE(
+                INT([_DataRef]) - INT(DataMin),
+                FaixaData,
+                0
+            )
+            * W,
+
+        "_Y",
+
+            VAR ValorVisual =
+                MIN(
+                    ValorMaxAjustado,
+
+                    MAX(
+                        ValorMinAjustado,
+                        [_Valor]
+                    )
+                )
+
+            RETURN
+
+                H
+                    -
+                    (
+                        DIVIDE(
+                            ValorVisual - ValorMinAjustado,
+                            FaixaValor,
+                            0
+                        )
+                        * (H - 18)
+                    )
+                    - 4
+    )
+
+
+-- ============================================================
+-- PONTOS DA LINHA
+-- ============================================================
+
+VAR PontosLinha =
+    CONCATENATEX(
+        SerieComXY,
+
+        SUBSTITUTE(
+            FORMAT(
+                [_X],
+                "0.0"
+            ),
+            ",",
+            "."
+        )
+
+        & ","
+
+        & SUBSTITUTE(
+            FORMAT(
+                [_Y],
+                "0.0"
+            ),
+            ",",
+            "."
+        ),
+
+        " ",
+
+        [_DataRef],
+        ASC
+    )
+
+
+-- ============================================================
+-- PREENCHIMENTO
+-- ============================================================
+
+VAR AreaPontos =
+    IF(
+        QtdePontos > 1,
+
+        "0,"
+            & H
+            & " "
+            & PontosLinha
+            & " "
+            & W
+            & ","
+            & H,
+
+        BLANK()
+    )
+-- ============================================================
+-- SVG
+-- ============================================================
+
+VAR SVGCard =
+    "<svg width='100%' height='100%' viewBox='0 0 260 110' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'>"
+        & "<defs>"
+            & "<linearGradient id='gradArea' x1='0' y1='0' x2='0' y2='1'>"
+                & "<stop offset='0%' stop-color='#50F296' stop-opacity='0.34'/>"
+                & "<stop offset='100%' stop-color='#50F296' stop-opacity='0.03'/>"
+            & "</linearGradient>"
+        & "</defs>"
+
+        & IF(
+            QtdePontos > 1,
+            "<polygon points='"
+                & AreaPontos
+                & "' fill='url(#gradArea)'/>",
+            ""
+        )
+
+        & "<polyline points='"
+            & PontosLinha
+            & "' fill='none' stroke='#16C75B' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/>"
+
+    & "</svg>"
+
+
+-- ============================================================
+-- HTML
+-- ============================================================
+
+VAR HtmlCard =
+    "<div style='width:100%;height:100%;box-sizing:border-box;background:transparent;border:none;margin:0;padding:0;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;'>"
+
+        & "<div style='width:100%;display:flex;align-items:center;gap:8px;padding:5px 6px 2px 6px;box-sizing:border-box;'>"
+
+            & "<div style='width:24px;height:24px;min-width:24px;border-radius:50%;background:#50F296;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:12px;'>"
+                & Icone
+            & "</div>"
+
+            & "<div style='font-size:14px;font-weight:600;color:#252424;line-height:1.1;white-space:nowrap;'>"
+                & Titulo
+            & "</div>"
+
+        & "</div>"
+
+
+            & "<div style='width:100%;flex:1;display:flex;align-items:stretch;justify-content:space-between;gap:8px;padding:2px 6px 5px 6px;box-sizing:border-box;min-height:0;'>"
+
+                & "<div style='width:47%;min-width:0;display:flex;flex-direction:column;justify-content:center;'>"
+
+                    & "<div style='font-size:38px;line-height:0.92;font-weight:800;color:#3F3E3E;letter-spacing:-1px;white-space:nowrap;'>"
+                        & FORMAT(ValorAtual,"#,0")
+                    & "</div>"
+
+                    & "<div style='margin-top:8px;'>"
+
+                        & "<div style='display:inline-flex;align-items:center;gap:4px;background:"
+                            & CorFundoIndicador
+                            & ";color:"
+                            & CorPrincipal
+                            & ";padding:4px 7px;border-radius:9px;font-size:11px;font-weight:700;line-height:1;white-space:nowrap;width:max-content;max-width:100%;box-sizing:border-box'>"
+
+                            & "<span style='font-size:12px;line-height:12px;'>"
+                                & Seta
+                            & "</span>"
+
+                            & "<span>"
+                                & FORMAT(ABS(Percentual),"0.0%")
+                                & " ("
+                                & TextoDiferenca
+                                & ")"
+                            & "</span>"
+
+                        & "</div>"
+
+                    & "</div>"
+
+                    & "<div style='margin-top:5px;font-size:10px;color:#7A8394;white-space:nowrap;'>"
+                        & IF(
+                            TextoPeriodoAnterior <> "",
+                            "vs. " & TextoPeriodoAnterior,
+                            ""
+                        )
+                    & "</div>"
+
+                & "</div>"
+
+                & "<div style='flex:1;min-width:0;display:flex;align-items:flex-end;justify-content:flex-end;padding-top:4px;padding-bottom:0;'>"
+
+                    & "<div style='width:100%;height:100%;min-height:70px;'>"
+                        & SVGCard
+                    & "</div>"
+
+                & "</div>"
+
+            & "</div>"
+        & "</div>"
+
+    & "</div>"
+
+RETURN
+    HtmlCard

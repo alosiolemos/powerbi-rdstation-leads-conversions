@@ -1,0 +1,4 @@
+*.dax text eol=lf linguist-language=Text
+*.pq text eol=lf linguist-language=Text
+*.md text eol=lf
+*.svg text eol=lf

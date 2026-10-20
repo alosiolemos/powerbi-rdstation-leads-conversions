@@ -1,0 +1,22 @@
+Quantidade de Contatos - Mês Anterior =
+CALCULATE(
+    [Quantidade de Contatos],
+    DATEADD(
+        dCalendario[Date],
+        -1,
+        MONTH
+    )
+)
+
+Evolução Contatos % =
+VAR Atual =
+    [Quantidade de Contatos]
+
+VAR Anterior =
+    [Quantidade de Contatos - Mês Anterior]
+
+RETURN
+    DIVIDE(
+        Atual - Anterior,
+        Anterior
+    )

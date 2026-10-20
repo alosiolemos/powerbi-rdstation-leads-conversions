@@ -1,0 +1,85 @@
+// Expressão extraída do modelo; marca e referências específicas generalizadas.
+HTML Status Atualização =
+VAR UltimaAtualizacao =
+    SELECTEDVALUE('Última Atualização'[Data e hora])
+
+VAR UltimaConversao =
+    MAX(RD_Eventos_Contato[event_timestamp])
+
+RETURN
+    "<div style='
+        width:100%;
+        height:100%;
+        box-sizing:border-box;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;
+        background:transparent;
+        padding:0 8px;
+        margin:0;
+        color:#404040;
+        text-align:center;
+    '>"
+
+        & "<div style='
+            width:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+            font-size:10px;
+            line-height:1.2;
+            white-space:nowrap;
+        '>"
+            & "<span style='
+                width:6px;
+                height:6px;
+                border-radius:50%;
+                background:#50F296;
+                display:inline-block;
+                flex-shrink:0;
+            '></span>"
+
+            & "<span style='color:#F9FBFD;'>Atualizado em</span>"
+
+            & "<span style='color:#F9FBFD;font-weight:600;'>"
+                & FORMAT(UltimaAtualizacao,"dd/MM/yy HH:mm")
+            & "</span>"
+        & "</div>"
+
+        & "<div style='
+            width:100%;
+            height:1px;
+            background:#E5E7EB;
+            margin:5px 0;
+        '></div>"
+
+        & "<div style='
+            width:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+            font-size:10px;
+            line-height:1.2;
+            white-space:nowrap;
+        '>"
+            & "<span style='
+                width:6px;
+                height:6px;
+                border-radius:50%;
+                background:#50F296;
+                display:inline-block;
+                flex-shrink:0;
+            '></span>"
+
+            & "<span style='color:#7A8394;'>Última conversão</span>"
+
+            & "<span style='color:#7A8394;font-weight:600;'>"
+                & FORMAT(UltimaConversao,"dd/MM/yy HH:mm")
+            & "</span>"
+        & "</div>"
+
+    & "</div>"

@@ -1,0 +1,317 @@
+// Expressão extraída do modelo; marca e referências específicas generalizadas.
+HTML Seletor Períodos =
+"<div style='
+        width:100%;
+        height:max-content;
+        min-height:0;
+        box-sizing:border-box;
+        display:flex;
+        flex-direction:column;
+        font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;
+        background:#FFFFFF;
+        border:1px solid #E5E7EB;
+        border-radius:16px;
+        padding:18px;
+        color:#252424;
+    '>"
+
+        /* =====================================================
+           CABEÇALHO
+        ===================================================== */
+
+        & "<div style='
+            width:100%;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            margin-bottom:18px;
+        '>"
+
+            & "<div style='
+                font-size:16px;
+                font-weight:700;
+                color:#3F3E3E;
+            '>"
+                & "Seleção de Períodos"
+            & "</div>"
+
+            & "<div style='
+                width:20px;
+                height:20px;
+                min-width:20px;
+                border-radius:50%;
+                background:#D64550;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                padding:0;
+                margin:0;
+                box-sizing:border-box;
+            '>"
+
+                & "<span style='
+                    color:#FFFFFF;
+                    font-size:12px;
+                    font-weight:700;
+                    line-height:1;
+                    display:block;
+                    padding:0;
+                    margin:0;
+                    transform:translate(-0.5px,-0.5px);
+                '>×</span>"
+
+            & "</div>"
+
+        & "</div>"
+
+
+        /* =====================================================
+           PERÍODOS FECHADOS
+        ===================================================== */
+
+        & "<div style='
+            font-size:12px;
+            font-weight:700;
+            color:#3F3E3E;
+            margin-bottom:10px;
+        '>"
+            & "Períodos fechados"
+        & "</div>"
+
+
+        & "<div style='
+            width:100%;
+            display:flex;
+            gap:10px;
+            margin-bottom:20px;
+        '>"
+
+            /* ANO */
+
+            & "<div style='flex:1;'>"
+
+                & "<div style='
+                    font-size:10px;
+                    font-weight:600;
+                    color:#7A8394;
+                    margin-bottom:5px;
+                '>Ano</div>"
+
+                & "<div style='
+                    width:100%;
+                    height:40px;
+                    border:1px solid #DDE2E7;
+                    border-radius:9px;
+                    background:#E9E9E9;
+                    box-sizing:border-box;
+                '></div>"
+
+            & "</div>"
+
+
+            /* TRIMESTRE */
+
+            & "<div style='flex:1;'>"
+
+                & "<div style='
+                    font-size:10px;
+                    font-weight:600;
+                    color:#7A8394;
+                    margin-bottom:5px;
+                '>Trimestre</div>"
+
+                & "<div style='
+                    width:100%;
+                    height:40px;
+                    border:1px solid #DDE2E7;
+                    border-radius:9px;
+                    background:#E9E9E9;
+                    box-sizing:border-box;
+                '></div>"
+
+            & "</div>"
+
+
+            /* MÊS */
+
+            & "<div style='flex:1;'>"
+
+                & "<div style='
+                    font-size:10px;
+                    font-weight:600;
+                    color:#7A8394;
+                    margin-bottom:5px;
+                '>Mês</div>"
+
+                & "<div style='
+                    width:100%;
+                    height:40px;
+                    border:1px solid #DDE2E7;
+                    border-radius:9px;
+                    background:#E9E9E9;
+                    box-sizing:border-box;
+                '></div>"
+
+            & "</div>"
+
+        & "</div>"
+
+
+        /* =====================================================
+           DIVISÓRIA
+        ===================================================== */
+
+        & "<div style='
+            width:100%;
+            height:1px;
+            background:#E5E7EB;
+            margin-bottom:16px;
+        '></div>"
+
+
+        /* =====================================================
+           PERÍODOS PERSONALIZADOS
+        ===================================================== */
+
+        & "<div style='
+            font-size:12px;
+            font-weight:700;
+            color:#3F3E3E;
+            margin-bottom:10px;
+        '>"
+            & "Períodos personalizados"
+        & "</div>"
+
+
+        /* PRIMEIRA LINHA PERSONALIZADA */
+
+        & "<div style='
+            width:100%;
+            display:flex;
+            align-items:center;
+            gap:8px;
+            margin-bottom:14px;
+            box-sizing:border-box;
+        '>"
+
+            /* ÚLTIMO */
+            & "<div style='
+                width:30%;
+                height:44px;
+                border:1px solid #DDE2E7;
+                border-radius:10px;
+                background:#E9E9E9;
+                box-sizing:border-box;
+                flex-shrink:0;
+            '></div>"
+
+            /* QUANTIDADE */
+            & "<div style='
+                width:19%;
+                height:44px;
+                border:1px solid #DDE2E7;
+                border-radius:10px;
+                background:#E9E9E9;
+                box-sizing:border-box;
+                flex-shrink:0;
+                margin-left:-6px;
+            '></div>"
+
+            /* SELECIONAR */
+            & "<div style='
+                flex:1;
+                min-width:0;
+                height:44px;
+                border:1px solid #DDE2E7;
+                border-radius:10px;
+                background:#E9E9E9;
+                box-sizing:border-box;
+                margin-left:-3px;
+            '></div>"
+
+        & "</div>"
+
+
+        /* STATUS */
+
+        & "<div style='
+            display:flex;
+            align-items:center;
+            gap:7px;
+            margin-bottom:14px;
+            font-size:10px;
+            color:#7A8394;
+        '>"
+            
+
+            & "<span></span>"
+
+        & "</div>"
+
+
+       /* =====================================================
+        DATA INICIAL E FINAL
+        ===================================================== */
+
+        & "<div style='
+            width:100%;
+            display:flex;
+            justify-content:center;
+            margin-bottom:18px;
+        '>"
+
+            & "<div style='
+                width:226px;
+            '>"
+
+                & "<div style='
+                    font-size:10px;
+                    font-weight:600;
+                    color:#7A8394;
+                    margin-bottom:5px;
+                    text-align:left;
+                '>"
+                    & "Data inicial e final"
+                & "</div>"
+
+                & "<div style='
+                    width:226px;
+                    height:44px;
+                    border:1px solid #DDE2E7;
+                    border-radius:10px;
+                    background:#E9E9E9;
+                    box-sizing:border-box;
+                '></div>"
+
+            & "</div>"
+
+        & "</div>"
+
+
+        /* =====================================================
+           LIMPAR FILTRO
+        ===================================================== */
+
+        & "<div style='
+            width:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-top:1px solid #E5E7EB;
+            padding-top:10px;
+            padding-bottom:0;
+            margin-bottom:0;
+        '>"
+
+            & "<div style='
+                font-size:11px;
+                font-weight:700;
+                color:#D64550;
+                line-height:1;
+                margin:0;
+                padding:0;
+            '>"
+                & "Limpar filtro"
+            & "</div>"
+
+        & "</div>"

@@ -1,0 +1,164 @@
+// Expressão extraída do modelo; marca e referências específicas generalizadas.
+HTML Seletor Indicadores graf 1 =
+VAR MetricaSelecionada =
+    SWITCH(
+        SELECTEDVALUE('pr.Metricas'[Parâmetro Pedido]),
+        0, "Contatos únicos",
+        1, "Leads Convertidos",
+        2, "Levantada de mão",
+        3, "Material Rico",
+        4, "Eventos",
+        5, "Clientes",
+        "Indicador"
+    )
+
+VAR PeriodoSelecionado =
+    SWITCH(
+        SELECTEDVALUE('pr_Tempo'[pr_Tempo Pedido]),
+        0, "Ano",
+        1, "Mês",
+        2, "Semana",
+        3, "Trimestre",
+        4, "Dia",
+        "Período"
+    )
+
+RETURN
+
+    "<div style='
+        width:100%;
+        height:100%;
+        box-sizing:border-box;
+        font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;
+        background:#FFFFFF;
+        border:1px solid #E5E7EB;
+        border-radius:16px;
+        padding:18px;
+        color:#252424;
+    '>"
+
+        & "<div style='
+            width:100%;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            margin-bottom:18px;
+        '>"
+
+            & "<div style='
+                font-size:16px;
+                font-weight:700;
+                color:#3F3E3E;
+            '>"
+                & "Seleção de Indicadores"
+            & "</div>"
+
+      & "<div style='
+            width:20px;
+            height:20px;
+            min-width:20px;
+            border-radius:50%;
+            background:#D64550;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:0;
+            margin:0;
+            box-sizing:border-box;
+            transform:translateX(10px);
+        '>"
+            & "<span style='
+                color:#FFFFFF;
+                font-size:12px;
+                font-weight:700;
+                line-height:1;
+                display:block;
+                padding:0;
+                margin:0;
+                transform:translate(-0.5px,-0.5px);
+            '>×</span>"
+        & "</div>"
+
+        & "</div>"
+
+        & "<div style='margin-bottom:18px;'>"
+
+            & "<div style='
+                font-size:11px;
+                font-weight:600;
+                color:#7A8394;
+                margin-bottom:6px;
+            '>"
+                & "Eixo Y · Métrica"
+            & "</div>"
+
+            & "<div style='
+                width:100%;
+                height:44px;
+                border:1px solid #DDE2E7;
+                border-radius:10px;
+                background:#FAFAFA;
+                box-sizing:border-box;
+            '></div>"
+
+        & "</div>"
+
+        & "<div style='margin-bottom:18px;'>"
+
+            & "<div style='
+                font-size:11px;
+                font-weight:600;
+                color:#7A8394;
+                margin-bottom:6px;
+            '>"
+                & "Eixo X · Período"
+            & "</div>"
+
+            & "<div style='
+                width:100%;
+                height:44px;
+                border:1px solid #DDE2E7;
+                border-radius:10px;
+                background:#FAFAFA;
+                box-sizing:border-box;
+            '></div>"
+
+        & "</div>"
+
+        & "<div style='
+            width:100%;
+            height:1px;
+            background:#E5E7EB;
+            margin:4px 0 14px 0;
+        '></div>"
+
+        & "<div style='
+            display:flex;
+            align-items:center;
+            gap:8px;
+            font-size:12px;
+            color:#7A8394;
+        '>"
+
+            & "<span style='
+                width:7px;
+                height:7px;
+                border-radius:50%;
+                background:#50F296;
+                display:inline-block;
+                flex-shrink:0;
+            '></span>"
+
+            & "<span>"
+                & "<b style='color:#3F3E3E;'>"
+                & MetricaSelecionada
+                & "</b>"
+                & " × "
+                & "<b style='color:#3F3E3E;'>"
+                & PeriodoSelecionado
+                & "</b>"
+            & "</span>"
+
+        & "</div>"
+
+    & "</div>"

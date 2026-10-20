@@ -1,0 +1,24 @@
+// Coluna calculada em RD_Contatos.
+Origem do Lead =
+VAR UUIDAtual =
+    RD_Contatos[uuid]
+
+VAR UltimoRegistro =
+    TOPN(
+        1,
+        FILTER(
+            RD_Eventos_Contato,
+            RD_Eventos_Contato[contact_uuid] = UUIDAtual
+                && NOT ISBLANK(RD_Eventos_Contato[Obter_Trafico.Canal])
+        ),
+        RD_Eventos_Contato[Data_event_timestamp], DESC
+    )
+
+RETURN
+    COALESCE(
+        MAXX(
+            UltimoRegistro,
+            RD_Eventos_Contato[Obter_Trafico.Canal]
+        ),
+        "Desconhecido"
+    )

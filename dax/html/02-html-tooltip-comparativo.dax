@@ -1,0 +1,77 @@
+// Expressão extraída do modelo; marca e referências específicas generalizadas.
+HTML Tooltip - Comparativo =
+VAR HtmlTooltip =
+    "<div style='
+        width:100%;
+        height:100%;
+        box-sizing:border-box;
+        font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;
+        background:#FFFFFF;
+        color:#0D0D0D;
+        padding:12px 14px;
+        border-radius:10px;
+        overflow:hidden;
+    '>"
+
+        & "<div style='
+            font-size:14px;
+            font-weight:600;
+            margin-bottom:7px;
+            color:#0D0D0D;
+        '>"
+            & "Como funciona o comparativo?"
+        & "</div>"
+
+        & "<div style='
+            font-size:11px;
+            line-height:1.35;
+            color:#404040;
+            margin-bottom:8px;
+        '>"
+            & "O card compara o resultado do período selecionado com o período anterior equivalente."
+        & "</div>"
+
+        & "<div style='
+            font-size:11px;
+            line-height:1.4;
+            color:#404040;
+        '>"
+        & "<b>Ano:</b> compara com o ano anterior.<br>"
+        & "<b>Trimestre:</b> compara com o trimestre anterior.<br>"
+        & "<b>Mês:</b> compara com o mês imediatamente anterior.<br>"
+        & "<b>Período personalizado:</b> compara com o intervalo anterior de mesma duração."
+        & "</div>"
+
+        & "<div style='
+            height:1px;
+            background:#E8E8E8;
+            margin:9px 0;
+        '></div>"
+
+        & "<div style='
+            font-size:11px;
+            line-height:1.35;
+            color:#404040;
+            margin-bottom:8px;
+        '>"
+            & "O percentual indica a variação e o valor entre parênteses mostra a diferença absoluta de contatos."
+        & "</div>"
+
+        & "<div style='
+            background:#F5FFF9;
+            border-left:3px solid #50F296;
+            padding:7px 9px;
+            border-radius:6px;
+            font-size:11px;
+            line-height:1.35;
+            color:#404040;
+        '>"
+            & "<b>Exemplo:</b> "
+            & "<span style='color:#DC2626;font-weight:600;'>↓ 91,1% (-20.527)</span>"
+            & " = 20.527 contatos a menos que no período comparado."
+        & "</div>"
+
+    & "</div>"
+
+RETURN
+    HtmlTooltip

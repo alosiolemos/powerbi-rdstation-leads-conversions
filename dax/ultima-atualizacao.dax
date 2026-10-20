@@ -1,0 +1,2 @@
+AtualizacaoRep_geral =
+"Última atualização: " & SELECTEDVALUE('Última Atualização'[Data e hora])& " | Última conversão: " & MAX(RD_Eventos_Contato[event_timestamp])

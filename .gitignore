@@ -1,0 +1,7 @@
+*.pbix
+*.pbip
+*.tmdl
+*.pbir
+.pbi/
+.env
+.env.*

@@ -1,0 +1,71 @@
+// Expressão extraída do modelo; marca e referências específicas generalizadas.
+HTML Título - Últimas Conversões =
+VAR IconeSVG =
+    "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <rect x='4' y='5' width='3' height='3' rx='1' fill='#16C75B'/>
+        <rect x='4' y='10.5' width='3' height='3' rx='1' fill='#16C75B'/>
+        <rect x='4' y='16' width='3' height='3' rx='1' fill='#16C75B'/>
+
+        <rect x='9' y='5' width='11' height='3' rx='1.5' fill='#16C75B'/>
+        <rect x='9' y='10.5' width='11' height='3' rx='1.5' fill='#16C75B'/>
+        <rect x='9' y='16' width='11' height='3' rx='1.5' fill='#16C75B'/>
+    </svg>"
+
+RETURN
+
+    "<div style='
+        width:100%;
+        height:100%;
+        box-sizing:border-box;
+        display:flex;
+        align-items:center;
+        gap:8px;
+        font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;
+        background:transparent;
+        padding:0;
+        margin:0;
+    '>"
+
+    & "<div style='
+        width:24px;
+        min-width:24px;
+        height:24px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        line-height:1;
+    '>"
+        & IconeSVG
+    & "</div>"
+
+    & "<div style='
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        min-width:0;
+    '>"
+
+        & "<div style='
+            font-size:18px;
+            font-weight:700;
+            color:#252424;
+            line-height:1.1;
+            white-space:nowrap;
+        '>"
+            & "Últimas conversões"
+        & "</div>"
+
+        & "<div style='
+            margin-top:2px;
+            font-size:12px;
+            font-weight:400;
+            color:#7A8394;
+            line-height:1.15;
+            white-space:nowrap;
+        '>"
+            & "Detalhamento das últimas conversões realizadas pelos contatos do RD Station."
+        & "</div>"
+
+    & "</div>"
+
+    & "</div>"

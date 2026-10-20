@@ -1,0 +1,209 @@
+Título Dinâmico - Métrica =
+VAR Metrica =
+    SWITCH(
+        SELECTEDVALUE('pr.Metricas'[Parâmetro Pedido]),
+        0, "Contatos únicos",
+        1, "Leads Convertidos",
+        2, "Levantada de mão",
+        3, "Material Rico",
+        4, "Eventos",
+        5, "Clientes",
+        6, "Total de Convesões",
+        "Indicador"
+    )
+
+VAR Periodo =
+    SWITCH(
+        SELECTEDVALUE('pr_Tempo'[pr_Tempo Pedido]),
+        0, "Ano",
+        1, "Mês",
+        2, "Semana",
+        3, "Trimestre",
+        4, "Dia",
+        "Período"
+    )
+
+RETURN
+    Metrica & " por " & Periodo
+
+Subtítulo Dinâmico - Métrica =
+VAR NomeMetrica =
+    SWITCH(
+        SELECTEDVALUE('pr.Metricas'[Parâmetro Pedido]),
+        0, "contatos únicos",
+        1, "leads convertidos",
+        2, "levantadas de mão",
+        3, "downloads de Material Rico",
+        4, "eventos",
+        5, "clientes",
+        6, "total de conversões",
+        "indicador"
+    )
+
+VAR TipoEvolucao =
+    SWITCH(
+        SELECTEDVALUE('pr_Tempo'[pr_Tempo Pedido]),
+        0, "anual",
+        1, "mensal",
+        2, "semanal",
+        3, "trimestral",
+        4, "diária",
+        ""
+    )
+
+RETURN
+    "Evolução "
+        & TipoEvolucao
+        & " de "
+        & NomeMetrica
+        & " no período selecionado."
+
+Data_Texto_Filtro =
+var primeira = FORMAT(FIRSTDATE(dCalendario[Date]),"dd/mm/yy")
+var segunda  = FORMAT(LASTDATE(dCalendario[Date]), "dd/MM/yy"
+)
+
+
+return
+primeira & " até " & segunda
+
+Observações_Dia_Semana =
+VAR Diferenca =
+    DATEDIFF(
+        FIRSTDATE(dCalendario[Date]),
+        LASTDATE(dCalendario[Date]),
+        DAY
+    ) + 1
+
+VAR PeriodoPedido =
+    SELECTEDVALUE('pr_Tempo'[pr_Tempo Pedido])
+
+VAR Selecao =
+    SWITCH(
+        PeriodoPedido,
+        2, "Semana",
+        4, "Dia",
+        BLANK()
+    )
+
+RETURN
+    IF(
+        PeriodoPedido IN {2,4}
+            && Diferenca > 31,
+
+        "🚫 Período de " &
+        Diferenca &
+        " dias. Para visualização por " &
+        Selecao &
+        ", recomendamos filtrar até 31 dias no menu de filtro ao lado. 👉",
+
+        BLANK()
+    )
+
+Métrica Dinâmica - Conversões =
+VAR origem_conversao_lead =
+    CALCULATE(
+        [Quantidade de Contatos],
+        KEEPFILTERS(
+            RD_Contatos[Origem do Lead] <> "Desconhecido"
+        )
+    )
+
+VAR classificacao_evento =
+    CALCULATE(
+        DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid]),
+        KEEPFILTERS(
+            RD_Eventos_Contato[classificacao_evento] <> "Outros"
+        )
+    )
+
+VAR Obter_Trafico_Canal =
+    CALCULATE(
+        DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid]),
+        KEEPFILTERS(
+            RD_Eventos_Contato[Obter_Trafico.Canal] <> "Desconhecido"
+        )
+    )
+
+VAR Resultado =
+    SWITCH(
+        TRUE(),
+        SELECTEDVALUE('pr.Conversões'[Parâmetro Pedido]) = 0, origem_conversao_lead,
+        SELECTEDVALUE('pr.Conversões'[Parâmetro Pedido]) = 1, classificacao_evento,
+        SELECTEDVALUE('pr.Conversões'[Parâmetro Pedido]) = 2, Obter_Trafico_Canal
+    )
+
+RETURN
+    Resultado
+
+Título Dinâmico - Conversões =
+VAR Pedido =
+    SELECTEDVALUE('pr.Conversões'[Parâmetro Pedido])
+
+VAR Resultado =
+    SWITCH(
+        TRUE(),
+        Pedido = 0, "Canais de origem do lead",
+        Pedido = 1, "Tipos de Eventos",
+        Pedido = 2, "Canais de origem da conversão",
+        "Indicadores de Conversão"
+    )
+
+RETURN
+    Resultado
+
+Subtítulo Dinâmico - Conversões =
+VAR Pedido =
+    SELECTEDVALUE('pr.Conversões'[Parâmetro Pedido])
+
+VAR Desconhecidos_OrigemLead =
+    CALCULATE(
+        [Quantidade de Contatos],
+        KEEPFILTERS(
+            RD_Contatos[Origem do Lead] = "Desconhecido"
+        )
+    )
+
+VAR Desconhecidos_TipoConversao =
+    CALCULATE(
+        DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid]),
+        KEEPFILTERS(
+            RD_Eventos_Contato[classificacao_evento] = "Outros"
+        )
+    )
+
+VAR Desconhecidos_Canal =
+    CALCULATE(
+        DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid]),
+        KEEPFILTERS(
+            RD_Eventos_Contato[Obter_Trafico.Canal] = "Desconhecido"
+        )
+    )
+
+VAR Resultado =
+    SWITCH(
+        TRUE(),
+
+        Pedido = 0,
+            "Canal de origem da primeira conversão que gerou o lead · "
+            & "<span style='color:#D64550;font-weight:600;'>"
+            & FORMAT(Desconhecidos_OrigemLead, "#,0")
+            & " desconhecidos</span>",
+
+        Pedido = 1,
+            "Distribuição dos contatos por tipo de evento · "
+            & "<span style='color:#D64550;font-weight:600;'>"
+            & FORMAT(Desconhecidos_TipoConversao, "#,0")
+            & " não classificados</span>",
+
+        Pedido = 2,
+            "Canal de origem das conversões realizadas pelos leads · "
+            & "<span style='color:#D64550;font-weight:600;'>"
+            & FORMAT(Desconhecidos_Canal, "#,0")
+            & " desconhecidos</span>",
+
+        BLANK()
+    )
+
+RETURN
+    Resultado

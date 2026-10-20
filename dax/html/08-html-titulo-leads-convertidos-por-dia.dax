@@ -1,0 +1,100 @@
+// Expressão extraída do modelo; marca e referências específicas generalizadas.
+HTML Título - Leads Convertidos por Dia =
+VAR IconeSVG =
+    "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <rect x='3' y='13' width='3' height='8' rx='1' fill='#16C75B'/>
+        <rect x='9' y='8' width='3' height='13' rx='1' fill='#16C75B'/>
+        <rect x='15' y='3' width='3' height='18' rx='1' fill='#16C75B'/>
+    </svg>"
+
+VAR Observacao =
+    [Observações_Dia_Semana]
+
+VAR TemAlerta =
+    NOT ISBLANK(Observacao)
+
+VAR TextoSubtitulo =
+    IF(
+        TemAlerta,
+        Observacao,
+        [Subtítulo Dinâmico - Métrica]
+            & " entre "
+            & [Data_Texto_Filtro]
+    )
+
+VAR CorSubtitulo =
+    IF(
+        TemAlerta,
+        "#D64550",
+        "#7A8394"
+    )
+
+VAR PesoSubtitulo =
+    IF(
+        TemAlerta,
+        "600",
+        "400"
+    )
+
+RETURN
+
+    "<div style='
+        width:100%;
+        height:100%;
+        box-sizing:border-box;
+        display:flex;
+        align-items:center;
+        gap:8px;
+        font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;
+        background:transparent;
+        padding:0;
+        margin:0;
+    '>"
+
+    & "<div style='
+        width:24px;
+        min-width:24px;
+        height:24px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        line-height:1;
+    '>"
+        & IconeSVG
+    & "</div>"
+
+    & "<div style='
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        min-width:0;
+    '>"
+
+        & "<div style='
+            font-size:18px;
+            font-weight:700;
+            color:#252424;
+            line-height:1.1;
+            white-space:nowrap;
+        '>"
+            & [Título Dinâmico - Métrica]
+        & "</div>"
+
+        & "<div style='
+            margin-top:2px;
+            font-size:12px;
+            font-weight:"
+                & PesoSubtitulo &
+            ";
+            color:"
+                & CorSubtitulo &
+            ";
+            line-height:1.15;
+            white-space:nowrap;
+        '>"
+            & TextoSubtitulo
+        & "</div>"
+
+    & "</div>"
+
+    & "</div>"

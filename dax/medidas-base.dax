@@ -1,0 +1,56 @@
+Quantidade de Contatos =
+DISTINCTCOUNT(RD_Contatos[uuid])+0
+
+Quantidade de Contatos levantada de mão =
+CALCULATE(
+    DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid]),
+    KEEPFILTERS(
+        RD_Eventos_Contato[classificacao_evento] = "Levantada de Mão"
+    )
+) + 0
+
+Quantidade de Contatos Levantada de Mão Legado =
+CALCULATE(
+    DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid]),
+    KEEPFILTERS(
+        RD_Eventos_Contato[classificacao_evento] = "Levantada de Mão Legado"
+    )
+) + 0
+
+Quantidade de Contatos Download Material Rico =
+CALCULATE(
+    DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid]),
+    KEEPFILTERS(
+        RD_Eventos_Contato[classificacao_evento] = "Material Rico"
+    )
+) + 0
+
+Quantidade de Contatos Clientes =
+CALCULATE(
+    DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid]),
+    KEEPFILTERS(
+        RD_Eventos_Contato[classificacao_evento] = "Clientes"
+    )
+) + 0
+
+Quantidade de Contatos Eventos =
+CALCULATE(
+    DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid]),
+    KEEPFILTERS(
+        RD_Eventos_Contato[classificacao_evento] = "Eventos"
+    )
+) + 0
+
+Quantidade de Eventos Não Categorizados =
+CALCULATE(
+    DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid]),
+    KEEPFILTERS(
+        RD_Eventos_Contato[classificacao_evento] = "Outros"
+    )
+) + 0
+
+Quantidade de Conversões =
+COUNT(RD_Eventos_Contato[contact_uuid])+0
+
+Quantidade de Leads convertidos =
+DISTINCTCOUNT(RD_Eventos_Contato[contact_uuid])+0
