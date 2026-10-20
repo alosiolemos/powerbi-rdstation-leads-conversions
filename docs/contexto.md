@@ -2,7 +2,7 @@
 
 O projeto acompanha a jornada de conversões do RD Station, mantendo visão de contatos e eventos. Um contato pode converter várias vezes, exigindo separar quantidade de pessoas e quantidade de conversões.
 
-O autor relata que a preparação manual consumia quase um dia para cruzar informações, identificar testes e montar o relatório. Com a solução, a análise passou a ser acessada em poucos segundos. Esses tempos são relatos do autor; não houve cronometragem ou comparação controlada nesta preparação.
+Identifiquei que a preparação manual consumia quase um dia para cruzar informações, identificar testes e montar o relatório. Com a solução que desenvolvi, a análise passou a ser acessada em poucos segundos. Esses tempos refletem minha experiência operacional, sem cronometragem ou comparação controlada nesta publicação.
 
 ## Entregas
 
