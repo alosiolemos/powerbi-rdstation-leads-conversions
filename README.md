@@ -37,9 +37,8 @@ O workflow recebido contém chamada de atualização pela API do Power BI. O mod
 
 ## Screenshots
 
-![Espaço reservado para o painel](assets/screenshots/preview.svg)
+![Painel de leads e conversões com cards HTML dinâmicos](assets/screenshots/PBI%20MARKETING%20-%20HTML.png)
 
-Envie uma captura preparada para publicação a `assets/screenshots/` e informe o nome para conectar ao README. Não foram publicadas capturas com dados de contatos.
 
 ## Explore
 
