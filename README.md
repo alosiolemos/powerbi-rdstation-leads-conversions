@@ -57,4 +57,4 @@ Envie uma captura preparada para publicação a `assets/screenshots/` e informe 
 
 ## Escopo público
 
-Publicação seletiva para portfólio: medidas HTML, medidas de suporte, consultas com marcadores e documentação. Não inclui PBIX/PBIP completo, dados de contatos, payloads reais, credenciais, IDs de tenant/workspace/dataset ou conexões operacionais. O JSON da automação será tratado em um case separado; aqui ele foi usado somente para verificar a arquitetura.
+Publicação seletiva para portfólio: medidas HTML, medidas de suporte, consultas com marcadores e documentação. Não inclui PBIX/PBIP completo, dados de contatos, payloads reais, credenciais, IDs de tenant/workspace/dataset ou conexões operacionais. A automação complementar está documentada em [n8n — RD Station, Azure SQL e Power BI](https://github.com/alosiolemos/n8n-rdstation-azure-powerbi-sync), com template inativo, código de tratamento e testes locais.
