@@ -23,7 +23,7 @@ As partições RD_Contatos e RD_Eventos_Contato usam **mode: import**. Uma conve
 
 Não foi identificado acompanhamento de status do refresh no fluxo recebido. Também não há evidência de Power BI Embedded ou DirectQuery nesta exportação. A integração confirmada é a solicitação de refresh pela API Power BI.
 
-O comportamento por evento depende de capacidade, limites do serviço, autenticação e concorrência. Não se afirma que a automação elimina limites de atualização ou opera indefinidamente sem manutenção. Os cerca de 60 segundos descritos pelo autor são observação operacional, não garantia.
+O comportamento por evento depende de capacidade, limites do serviço, autenticação e concorrência. Não se afirma que a automação elimina limites de atualização ou opera indefinidamente sem manutenção. Os cerca de 60 segundos que observei na operação não representam uma garantia de desempenho.
 
 ## Possíveis evoluções
 
