@@ -4,9 +4,9 @@ Painel de leads e conversões que combina **cards HTML/CSS gerados por DAX**, hi
 
 ## O desafio
 
-Segundo o autor, preparar o relatório exigia quase um dia de trabalho manual: reunir registros, cruzar informações e excluir testes. A solução passou a centralizar contatos e conversões para permitir consulta em poucos segundos, com comportamento interativo e dados atualizados por uma automação.
+Antes do painel, a preparação do relatório exigia quase um dia de trabalho manual para reunir registros, cruzar informações e excluir testes. Desenvolvi a solução para centralizar contatos e conversões, permitindo consultas em poucos segundos, com filtros interativos e dados atualizados por uma automação.
 
-O ganho de tempo é um relato operacional, sem medição independente nesta publicação. O autor informa cerca de 60 segundos para atualização/consulta, dependendo dos filtros; não é um SLA nem uma garantia de execução em todo ambiente.
+Na minha operação, observei cerca de 60 segundos para atualização/consulta, dependendo dos filtros. Esse tempo não foi medido de forma independente nesta publicação e não representa um SLA ou uma garantia para outros ambientes.
 
 ## O diferencial: cards que respondem ao contexto
 
